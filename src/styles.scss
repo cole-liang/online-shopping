@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.css";
+
+$primary-theme-color: green;
+$add-product-button: rgba(0, 119, 255, 0.671);
+$add-product-button-hover: lightblue;
+$navbar-bottom-color: #e7e7e7;
+
+.navbar-light .navbar-brand {
+    color: $primary-theme-color;
+}
+
+.list-group-item.active {
+    background-color: $primary-theme-color;
+    border-color: $primary-theme-color;
+}
+
+.btn-secondary:focus, .btn-secondary:hover, {
+    background-color: $add-product-button-hover;
+    border-color: $add-product-button-hover;
+}
+
+.btn-secondary{
+    background-color: $add-product-button;
+    border-color: $add-product-button;
+}
+
+.navbar { 
+    border-bottom: 3px solid $navbar-bottom-color;
+  }
