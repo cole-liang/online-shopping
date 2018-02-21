@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShoppingCart } from './../models/shopping-cart';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
@@ -19,7 +20,8 @@ export class CheckOutFormComponent implements OnInit {
 
   constructor(private orderService:OrderService,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private snackBar: MatSnackBar) { }
 
   async ngOnInit() {
     this.subscription = this.authService.user$.subscribe(user => this.userId = user.uid);
@@ -29,9 +31,18 @@ export class CheckOutFormComponent implements OnInit {
     this.subscription.unsubscribe();
   }
   
-  async placeOrder() {
+  placeOrder() {
     let order = new Order(this.shipping, this.cart, this.userId);
-    let result = await this.orderService.updateOrder(order);
-    this.router.navigate(['/order-success', result.key]);
+    this.orderService.updateOrder(order).then(response => {
+      this.snackBar.open("Successfully ordered!", "Got it", {
+        duration: 4000,
+      })
+      this.router.navigate(['/']);
+    }, error => {
+      this.snackBar.open("Fail to order, please check your network.", "Got it", {
+        duration: 4000,
+      })
+    });
+    
   }    
 }

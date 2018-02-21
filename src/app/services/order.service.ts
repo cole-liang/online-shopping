@@ -36,12 +36,21 @@ export class OrderService {
   }
 
   getOrderByOrderId(orderId: string){
-    return this.db.object('/orders/' + orderId).valueChanges();
+    return this.db.object('/orders/' + orderId)
+    .snapshotChanges().map(item =>{
+      const key = item.payload.key;
+      const data = {key, ...item.payload.val()};
+      return data;
+    })
   }
 
   updateOrder(order){
     let result = this.db.list('/orders/').push(order);
     this.cartService.clearCart();
     return result;
+  }
+
+  deleteOrder(orderId){
+    return this.db.object('/orders/' + orderId).remove();
   }
 }

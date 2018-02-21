@@ -18,3 +18,7 @@
 .disabled{
     cursor: not-allowed;
 }
+
+.table {
+    margin-top: 2%;
+}

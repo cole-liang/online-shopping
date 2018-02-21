@@ -12,9 +12,9 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <button class="btn btn-light" routerLink="/shopping-cart">
+          <button *ngIf="cart$ | async as cart" [matTooltip]="cart.totalItemsCount + ' items in cart'" class="btn btn-light" routerLink="/shopping-cart">
             <i class="fas fa-cart-arrow-down"></i>
-            <span *ngIf="cart$ | async as cart" class="badge badge-pill badge-warning">
+            <span class="badge badge-pill badge-warning">
               {{ cart.totalItemsCount }}
             </span>
           </button>

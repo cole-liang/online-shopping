@@ -1,11 +1,57 @@
-<!-- <div class="row">
-  <div class="col-6">
-    <check-out-form></check-out-form>
-  </div>
-  <div class="col-6">
+<h2 class="text-center"> Order Detail </h2>
+<br>
 
-  </div>
-</div> -->
-<p>
-  Not implement yet.. will implement it in future..
-</p>
+<div *ngIf="order$ | async as order">
+  <table class="table table-striped">
+    <thead>
+      <tr class="table-primary">
+        <th 
+          colspan="3"
+          class="sub-heading">Shipping Info</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="order.shipping as shipping">
+      <tr>
+        <th class="sub-property">Name</th>
+        <td colspan="2">{{ shipping.name }}</td>
+      </tr>
+      <tr>
+        <th class="sub-property">City</th>
+        <td colspan="2">{{ shipping.city }}</td>
+      </tr>
+      <tr>
+        <th class="sub-property">Address</th>
+        <td colspan="2">{{ shipping.addressLine1 }}</td>
+      </tr>
+      <tr *ngIf="shipping.addressLine2 && shipping.addressLine2 !== ''">
+        <th class="sub-property">Address Line 2</th>
+        <td colspan="2">{{ shipping.addressLine2 }}</td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr class="table-primary">
+        <th 
+          colspan="3"
+          class="sub-heading">Ordered Product</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Name</th>
+        <th class="text-center">Quantity</th>
+        <th class="text-center">Total Price</th>
+      </tr>
+      <tr *ngFor="let item of order.items">
+        <td>{{ item.product.title }}</td>
+        <td class="text-center">{{ item.quantity }}</td>
+        <td class="text-center">{{ item.totalPrice | currency: 'AUD'}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="return()" class="btn btn-primary">Return</button>
+  <button
+    *ngIf="appUser.isAdmin" 
+    mat-button
+    (click)="delete(order.key)"
+    class="btn btn-danger">Delete</button>
+</div>
