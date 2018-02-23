@@ -1,16 +1,16 @@
 #qty{
     text-align: center;
-    width: 230px;
+    width: 14em;
 }
 
 #price{
     text-align: right;
-    width: 200px;
+    width: 12em;
 }
 
 .thumbnail{
-    height: 80px;
-    width: 80px;
+    height: 5em;
+    width: 5em;
     border-radius: 100%;
     background-size: cover;
 }

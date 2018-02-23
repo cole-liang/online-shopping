@@ -4,23 +4,21 @@
       <i class="fab fa-pagelines"></i>
       Freshing Vege
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <div class="mr-auto">
+      <button *ngIf="cart$ | async as cart" [matTooltip]="cart.totalItemsCount + ' items in cart'" class="btn btn-light" routerLink="/shopping-cart">
+        <i class="fas fa-cart-arrow-down"></i>
+        <span class="badge badge-pill badge-warning">
+          {{ cart.totalItemsCount }}
+        </span>
+      </button>
+    </div>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="navbarSupportedContent"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <button *ngIf="cart$ | async as cart" [matTooltip]="cart.totalItemsCount + ' items in cart'" class="btn btn-light" routerLink="/shopping-cart">
-            <i class="fas fa-cart-arrow-down"></i>
-            <span class="badge badge-pill badge-warning">
-              {{ cart.totalItemsCount }}
-            </span>
-          </button>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
+
+    <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
         <ng-template #anonymousUser>
           <li class="nav-item">
             <a class="btn btn-light" (click)="auth.login()">
@@ -28,15 +26,15 @@
             </a>
           </li>
         </ng-template>
-        
+
         <li class="nav-item" *ngIf="appUser; else anonymousUser">
           <div ngbDropdown>
             <a class="btn btn-light" ngbDropdownToggle>{{ appUser.name }}</a>
             <div ngbDropdownMenu>
               <button class="dropdown-item" routerLink="my/orders">My Orders</button>
               <ng-container *ngIf="appUser.isAdmin">
-                  <button class="dropdown-item" routerLink="admin/orders">Manage Orders</button>
-                  <button class="dropdown-item" routerLink="admin/products">Manage Products</button>
+                <button class="dropdown-item" routerLink="admin/orders">Manage Orders</button>
+                <button class="dropdown-item" routerLink="admin/products">Manage Products</button>
               </ng-container>
               <button class="dropdown-item" (click)="auth.logout()">Log out</button>
             </div>
